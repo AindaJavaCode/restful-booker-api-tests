@@ -1,0 +1,58 @@
+name: API Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:          # adds a "Run workflow" button in the Actions tab
+
+permissions:
+  contents: read
+  checks: write               # lets the report step add results to the run
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out tests
+        uses: actions/checkout@v4
+
+      - name: Check out restful-booker
+        uses: actions/checkout@v4
+        with:
+          repository: mwinteringham/restful-booker
+          path: restful-booker
+
+      - name: Start restful-booker in Docker
+        run: |
+          docker build -t restful-booker ./restful-booker
+          docker run -d -p 3001:3001 --name api restful-booker
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:3001/ping && exit 0
+            sleep 2
+          done
+          docker logs api
+          exit 1
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Run tests
+        run: mvn -B test -Dbase.url=http://localhost:3001
+
+      - name: Publish test results
+        if: always()
+        uses: mikepenz/action-junit-report@v4
+        with:
+          report_paths: target/surefire-reports/TEST-*.xml
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: target/surefire-reports
