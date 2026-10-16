@@ -1,0 +1,45 @@
+<div>PUT to http://localhost:3001/booking/19</div>
+
+    <h4>Body</h4>
+    <div>
+    <pre class="preformated-text">
+{
+    &quot;firstname&quot;: &quot;Yvette&quot;,
+    &quot;lastname&quot;: &quot;Steuber&quot;,
+    &quot;totalprice&quot;: 877,
+    &quot;depositpaid&quot;: false,
+    &quot;bookingdates&quot;: {
+        &quot;checkin&quot;: null,
+        &quot;checkout&quot;: &quot;2026-11-05&quot;
+    },
+    &quot;additionalneeds&quot;: &quot;Late checkout&quot;
+}    </pre>
+    </div>
+
+    <h4>Headers</h4>
+    <div>
+            <div>Accept: application/json</div>
+            <div>Content-Type: application/json</div>
+    </div>
+
+
+    <h4>Cookies</h4>
+    <div>
+            <div>token: e6649451952f55d</div>
+    </div>
+
+    <h4>Curl</h4>
+    <div>
+        curl -v -X PUT &#39;http://localhost:3001/booking/19&#39; -H &#39;Accept: application/json&#39; -H &#39;Content-Type: application/json&#39; -b &#39;token=e6649451952f55d&#39; -d &#39;{
+    &quot;firstname&quot;: &quot;Yvette&quot;,
+    &quot;lastname&quot;: &quot;Steuber&quot;,
+    &quot;totalprice&quot;: 877,
+    &quot;depositpaid&quot;: false,
+    &quot;bookingdates&quot;: {
+        &quot;checkin&quot;: null,
+        &quot;checkout&quot;: &quot;2026-11-05&quot;
+    },
+    &quot;additionalneeds&quot;: &quot;Late checkout&quot;
+}&#39;
+    </div>
+
