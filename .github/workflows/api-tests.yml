@@ -67,17 +67,21 @@ jobs:
           ref: gh-pages
           path: gh-pages
 
-      - name: Remove git metadata from report history
-        if: always() && github.ref == 'refs/heads/main'
-        run: rm -rf gh-pages/.git
-
       - name: Build Allure report
         if: always() && github.ref == 'refs/heads/main'
-        uses: simple-elf/allure-report-action@v1.15
-        with:
-          allure_results: target/allure-results
-          gh_pages: gh-pages
-          allure_history: allure-history
+        env:
+          RUN: ${{ github.run_number }}
+        run: |
+          rm -rf gh-pages/.git
+          mkdir -p allure-history
+          cp -r gh-pages/. allure-history/ 2>/dev/null || true
+          rm -rf target/allure-results/history
+          cp -r gh-pages/last-history target/allure-results/history 2>/dev/null || true
+          npx --yes allure-commandline@2.30.0 generate target/allure-results -o allure-history/$RUN --clean
+          rm -rf allure-history/last-history
+          cp -r allure-history/$RUN/history allure-history/last-history
+          ls -d allure-history/[0-9]* | sort -V | head -n -20 | xargs -r rm -rf
+          echo "<meta http-equiv=\"refresh\" content=\"0; url=$RUN/index.html\">" > allure-history/index.html
 
       - name: Publish report to GitHub Pages
         if: always() && github.ref == 'refs/heads/main'
