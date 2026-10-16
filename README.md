@@ -1,15 +1,52 @@
+# Restful Booker – REST API Test Automation Framework
+
 ![API Tests](https://github.com/AindaJavaCode/restful-booker-api-tests/actions/workflows/api-tests.yml/badge.svg)
+![Performance](https://github.com/AindaJavaCode/restful-booker-api-tests/actions/workflows/performance.yml/badge.svg)
+![Java](https://img.shields.io/badge/Java-21-orange)
+![REST Assured](https://img.shields.io/badge/REST%20Assured-5.5-green)
+![TestNG](https://img.shields.io/badge/TestNG-7.10-red)
+![Dependabot](https://img.shields.io/badge/Dependabot-enabled-brightgreen?logo=dependabot)
 
-# Restful Booker API Tests
+**[📊 View the live test report](https://aindajavacode.github.io/restful-booker-api-tests/)**
 
-REST API test suite for https://restful-booker.herokuapp.com, built with Java 17+, Maven, TestNG and REST Assured.
+A production-style test automation framework for the
+[Restful Booker](https://github.com/mwinteringham/restful-booker) REST API, built with
+**Java, REST Assured and TestNG**. Every push runs the full suite in **GitHub Actions** against
+a **Dockerised** copy of the API, publishes an **Allure report to GitHub Pages**, and runs a
+**k6 load test** with performance thresholds that fail the build on regressions.
 
-## Running
+## Highlights
 
-```bash
-mvn test                      # full regression suite (parallel by class)
-mvn test -Dsuite=smoke        # only tests in the "smoke" group
-mvn test -Dbase.url=http://localhost:3001 -Dlog.all=true   # override any config key
+- 🧪 **Functional API testing**: positive, negative and contract tests (JSON Schema) across
+  create, read, update and delete, including authentication and authorisation checks
+- 🐞 **7 real defects found and documented**: each written up as a bug report and covered
+  by a test ([see Bugs found](#bugs-and-api-quirks-found))
+- 🔁 **CI/CD with GitHub Actions**: runs on every push and pull request; branch protection
+  blocks merges when tests fail
+- 🐳 **Reliable test environment**: CI builds and runs its own copy of the API in Docker, so
+  results never depend on a shared server
+- 📊 **Allure reporting on GitHub Pages**: every request and response attached to its
+  test, with trend history across runs
+- ⚡ **Performance testing with k6**: a create → read → delete journey under load, with
+  p95 latency and error-rate thresholds as quality gates
+- 🔐 **Secure by design**: credentials come from GitHub Secrets via environment variables,
+  never hard-coded into CI
+- 🤖 **Automated dependency updates**: Dependabot opens weekly PRs for Maven and GitHub
+  Actions updates, and each one must pass the full suite before merging
+- 🧱 **Maintainable architecture**: layered API clients, typed models (Java records),
+  random test data (Datafaker), automatic cleanup, and parallel-safe execution
+
+## Tech stack
+
+| Area | Tools |
+|------|-------|
+| Language & build | Java 21, Maven |
+| API testing | REST Assured, TestNG, AssertJ, JSON Schema Validator |
+| Test data | Datafaker, Jackson |
+| Reporting | Allure (published to GitHub Pages) |
+| Performance | k6 |
+| CI/CD | GitHub Actions, Dependabot |
+| Environment | Docker |
 ```
 
 Config lives in `src/main/resources/config.properties`. Each key can be overridden by a system
