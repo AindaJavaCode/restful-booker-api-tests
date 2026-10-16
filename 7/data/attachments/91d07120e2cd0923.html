@@ -1,0 +1,41 @@
+<div>PUT to http://localhost:3001/booking/21</div>
+
+    <h4>Body</h4>
+    <div>
+    <pre class="preformated-text">
+{
+    &quot;firstname&quot;: &quot;Edgardo&quot;,
+    &quot;lastname&quot;: &quot;Lang&quot;,
+    &quot;totalprice&quot;: 1641,
+    &quot;depositpaid&quot;: true,
+    &quot;bookingdates&quot;: {
+        &quot;checkin&quot;: &quot;2026-11-09&quot;,
+        &quot;checkout&quot;: &quot;2026-11-18&quot;
+    },
+    &quot;additionalneeds&quot;: &quot;Late checkout&quot;
+}    </pre>
+    </div>
+
+    <h4>Headers</h4>
+    <div>
+            <div>Accept: application/json</div>
+            <div>Content-Type: application/json</div>
+    </div>
+
+
+
+    <h4>Curl</h4>
+    <div>
+        curl -v -X PUT &#39;http://localhost:3001/booking/21&#39; -H &#39;Accept: application/json&#39; -H &#39;Content-Type: application/json&#39; -d &#39;{
+    &quot;firstname&quot;: &quot;Edgardo&quot;,
+    &quot;lastname&quot;: &quot;Lang&quot;,
+    &quot;totalprice&quot;: 1641,
+    &quot;depositpaid&quot;: true,
+    &quot;bookingdates&quot;: {
+        &quot;checkin&quot;: &quot;2026-11-09&quot;,
+        &quot;checkout&quot;: &quot;2026-11-18&quot;
+    },
+    &quot;additionalneeds&quot;: &quot;Late checkout&quot;
+}&#39;
+    </div>
+
