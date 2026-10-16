@@ -43,6 +43,8 @@ jobs:
 
       - name: Run tests
         run: mvn -B test -Dbase.url=http://localhost:3001
+        env:
+          AUTH_PASSWORD: ${{ secrets.AUTH_PASSWORD }}
 
       - name: Publish test results
         if: always()
