@@ -15,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out tests
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Check out restful-booker
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: mwinteringham/restful-booker
           path: restful-booker
@@ -61,7 +61,7 @@ jobs:
 
       - name: Load previous report history
         if: always() && github.ref == 'refs/heads/main'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         continue-on-error: true
         with:
           ref: gh-pages
