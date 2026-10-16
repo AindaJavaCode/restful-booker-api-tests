@@ -1,3 +1,5 @@
+![API Tests](https://github.com/AindaJavaCode/restful-booker-api-tests/actions/workflows/api-tests.yml/badge.svg)
+
 # Restful Booker API Tests
 
 REST API test suite for https://restful-booker.herokuapp.com, built with Java 17+, Maven, TestNG and REST Assured.
