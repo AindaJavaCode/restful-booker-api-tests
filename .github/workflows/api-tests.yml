@@ -7,7 +7,7 @@ on:
   workflow_dispatch:          # adds a "Run workflow" button in the Actions tab
 
 permissions:
-  contents: read
+  contents: write
   checks: write               # lets the report step add results to the run
 
 jobs:
@@ -58,3 +58,27 @@ jobs:
         with:
           name: test-reports
           path: target/surefire-reports
+
+      - name: Load previous report history
+        if: always() && github.ref == 'refs/heads/main'
+        uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Build Allure report
+        if: always() && github.ref == 'refs/heads/main'
+        uses: simple-elf/allure-report-action@v1.15
+        with:
+          allure_results: target/allure-results
+          gh_pages: gh-pages
+          allure_history: allure-history
+
+      - name: Publish report to GitHub Pages
+        if: always() && github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history

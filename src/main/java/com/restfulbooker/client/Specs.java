@@ -9,6 +9,7 @@ import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
+import io.qameta.allure.restassured.AllureRestAssured;
 
 /**
  * Builds request specifications. A fresh spec is created per call so tests are safe to
@@ -34,7 +35,9 @@ public final class Specs {
                 .setConfig(config)
                 // restful-booker answers 418 to POST /booking unless Accept is JSON
                 .setAccept("application/json")
-                .setContentType(ContentType.JSON);
+                .setContentType(ContentType.JSON)
+                // Attaches every request and response to the Allure report
+                .addFilter(new AllureRestAssured());
 
         if (Config.logAll()) {
             builder.addFilter(new RequestLoggingFilter()).addFilter(new ResponseLoggingFilter());
