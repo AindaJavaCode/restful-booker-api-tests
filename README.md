@@ -47,7 +47,7 @@ a **Dockerised** copy of the API, publishes an **Allure report to GitHub Pages**
 | Performance | k6 |
 | CI/CD | GitHub Actions, Dependabot |
 | Environment | Docker |
-```
+
 
 Config lives in `src/main/resources/config.properties`. Each key can be overridden by a system
 property (`-Dbase.url=...`) or an environment variable (`BASE_URL=...`).
@@ -55,19 +55,21 @@ Reports are written to `target/surefire-reports/`.
 
 ## Layout
 
-```
-src/main/java/com/restfulbooker/
-  config/   Config            - layered config lookup
-  client/   Specs             - shared request spec (base URI, JSON headers, timeouts, logging)
-            *Client           - one class per API area; methods return raw Response
-  models/   records           - request/response POJOs (Jackson)
-  data/     BookingFactory    - random valid test data (Datafaker)
-src/test/java/com/restfulbooker/
-  base/     BaseTest          - clients, cached token, auto-cleanup of created bookings
-  tests/    *Test             - test classes
-src/test/resources/
-  schemas/  JSON schemas for contract checks
-  suites/   TestNG suite files (regression.xml, smoke.xml)
+```text
+src/
+├── main/java/com/restfulbooker/
+│   ├── config/    # Config: layered config lookup
+│   ├── client/    # Specs: shared request spec (base URI, JSON headers, timeouts, logging)
+│   │              # *Client: one class per API area; methods return raw Response
+│   ├── models/    # records: request/response POJOs (Jackson)
+│   └── data/      # BookingFactory: random valid test data (Datafaker)
+└── test/
+    ├── java/com/restfulbooker/
+    │   ├── base/      # BaseTest: clients, cached token, auto-cleanup of created bookings
+    │   └── tests/     # *Test: test classes
+    └── resources/
+        ├── schemas/   # JSON schemas for contract checks
+        └── suites/    # TestNG suite files (regression.xml, smoke.xml)
 ```
 
 ## Writing a test
